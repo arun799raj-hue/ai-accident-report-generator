@@ -72,8 +72,8 @@ with st.form("accident_form"):
                     y -= 14
                     c.save()
                     return temp_file.name
-               pdf_path = create_pdf(report)
-             with open(pdf_path, "rb") as pdf_file:
+              pdf_path = create_pdf(report)
+              with open(pdf_path, "rb") as pdf_file:
                  st.download_button(label="Download Report as PDF", data=pdf_file, file_name="Accident_Report.pdf", mime="application/pdf")
                  os.remove(pdf_path)
              except Exception as e:
