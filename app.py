@@ -7,7 +7,7 @@ import os
 st.set_page_config(page_title="AI Accident Report Generator", layout="centered")
 st.caption("Generate prfessional industrial accident reports using AI")
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("models/gemini-pro")
 with st.form("accident_form"):
     st.subheader("Accident Details")
     worker_name = st.text_input("Worker Name")
