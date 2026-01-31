@@ -9,7 +9,7 @@ if not api_key:
   st.stop()
   genai.configure(api_key=api_key)
   model = genai.GenerativeModel("gemini-1.5-flash")
-  with st.frm("accident_form"):
+  with st.form("accident_form"):
     st.subheader("Accident Details")
     worker_name = st.text_input("Worker Name")
     worker_ID = st.text_input("Worker ID")
