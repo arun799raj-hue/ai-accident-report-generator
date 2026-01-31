@@ -12,7 +12,7 @@ if not api_key:
   with st.form("accident_form"):
     st.subheader("Accident Details")
     worker_name = st.text_input("Worker Name")
-    worker_ID = st.text_input("Worker ID")
+    worker_id = st.text_input("Worker ID")
     date = st.date_input("Date of Accident")
     time = st.time_input("Time of Accident")
     location = st.text_input("Accident Location")
@@ -55,7 +55,7 @@ if not api_key:
 
           Use clear, formal, professional language.
           """
-                     try:
+                  try:
                        response = model.generate_content(prompt)
                        report = response.text
                        st.success("Accident Report Generated")
