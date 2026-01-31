@@ -76,7 +76,7 @@ with st.form("accident_form"):
               with open(pdf_path, "rb") as pdf_file:
                  st.download_button(label="Download Report as PDF", data=pdf_file, file_name="Accident_Report.pdf", mime="application/pdf")
                  os.remove(pdf_path)
-            except Exception as e:
+          except Exception as e:
                  st.error(f"Error generating report: {e}")
                       
           
