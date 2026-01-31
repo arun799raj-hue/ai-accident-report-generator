@@ -1,10 +1,11 @@
 import streamlit as st
-import os
 import google.generativeai as genai
 from fpdf import FPDF
 st.set_page_config(page_title="AI Accident Report Generator", layout="centered")
 st.title("AI Accident Report Generator")
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+api_key = st.secrets["GEMINI_API_KEY"]
+genai.configure(api_key=api_key)
+model = genai.GenerativeMdel("gemini-1.5-flash")
 with st.form("accident_form"):
   worker_name = st.text_input("Worker Name")
   worker_id = st.text_input("Employee ID")
