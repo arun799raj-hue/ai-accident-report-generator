@@ -63,7 +63,7 @@ if not api_key:
               st.markdown("---")
               st.markdown(report)
               st.download_button("Download Report", file_name="Accident_Report.txt")
-           except Exception as e:
+          except Exception as e:
               st.error(f"Error generating report: {e}")
                       
           
