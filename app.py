@@ -26,7 +26,8 @@ if not api_key:
         st.warning("Please fill all required fields.")
       else:
         with st.spinner("Generating report using AI..."):
-          prompt = f"""You are an industrial safety officer AI.
+          prompt = f"""
+          You are an industrial safety officer AI.
 
           Generate a professional factory accident report using details below.
 
