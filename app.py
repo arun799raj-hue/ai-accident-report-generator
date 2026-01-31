@@ -55,7 +55,6 @@ with st.form("accident_form"):
           Use clear, formal, professional language.
           """
           try:
-              with st.spinner("Generating report..."):
               response = model.generate_content(prompt)
               report = response.text
               st.success("Accident Report Generated")
