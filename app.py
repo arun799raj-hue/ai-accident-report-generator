@@ -2,6 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 st.set_page_config(page_title="AI Accident Report Generator", layout="centered")
 st.title("AI Factory Accident Report Generator")
+st.title("The app is fully working")
 st.write("Generate professional industrial accident reports using AI.")
 api_key = st.secrets.get("GEMINI_API_KEY")
 if not api_key:
