@@ -55,14 +55,15 @@ if not api_key:
 
           Use clear, formal, professional language.
           """
-                  try:
-                       response = model.generate_content(prompt)
-                       report = response.text
-                       st.success("Accident Report Generated")
-                       st.markdown("---")
-                       st.markdown(report)
-                       st.download_button("Download Report", file_name="Accident_Report.txt")
-                     except Exception as e:
+          try:
+            
+              response = model.generate_content(prompt)
+              report = response.text
+              st.success("Accident Report Generated")
+              st.markdown("---")
+              st.markdown(report)
+              st.download_button("Download Report", file_name="Accident_Report.txt")
+              except Exception as e:
                        st.error(f"Error generating report: {e}")
                       
           
