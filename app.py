@@ -39,7 +39,7 @@ if not api_key:
           Machine/Equipment: {machine}
           Injury Type: {injury_type}
           Severity: {severity}
-          Description: [description}
+          Description: {description}
 
           The report must include:
           1. Accident Summary
