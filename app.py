@@ -2,7 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 st.set_page_config(page_title="AI Accident Report Generator")
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-flash-latest")
 st.title("AI Factory Accident Report Generator")
     worker_name = st.text_input("Worker Name")
     worker_id = st.text_input("Worker ID")
