@@ -47,11 +47,11 @@ if st.button("Generate Report"):
             Incident Description:
             {description}
             """
-                         response = model.generate_content(prompt)
-                         report = response.text
-                         st.success("Accident Report Generated")
-                         st.markdown(report)
-                         st.download_button("Download Report", report, file_name="accident_report.txt")
+                        response = model.generate_content(prompt)
+                        report = response.text
+                        st.success("Accident Report Generated")
+                        st.markdown(report)
+                        st.download_button("Download Report", report, file_name="accident_report.txt")
                      except Exception as e:
                           st.error(f"Error generating report: {e}")
                       
