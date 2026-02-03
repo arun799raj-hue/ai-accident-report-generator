@@ -4,6 +4,7 @@ st.set_page_config(page_title="AI Accident Report Generator")
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 model = genai.GenerativeModel("gemini-flash-latest")
 st.title("AI Factory Accident Report Generator")
+
     worker_name = st.text_input("Worker Name")
     worker_id = st.text_input("Worker ID")
     date = st.date_input("Date of Accident")
