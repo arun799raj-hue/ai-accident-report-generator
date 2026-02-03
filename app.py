@@ -13,7 +13,7 @@ st.caption("Generate professional industrial accident reports using AI")
 
 # ---------------- API CONFIG ----------------
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-flash-latest")
 
 # ---------------- FORM INPUTS ----------------
 st.subheader("Accident Details")
