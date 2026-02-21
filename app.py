@@ -125,7 +125,7 @@ Company Compensation:
 - Job opportunity for one family member
 """
              elif cause == "Worker":
-    insurance_text = """
+                 insurance_text = """
 Worker Responsibility:
 - Safety training to be provided to the worker
 - Mandatory safety protocol re-training
