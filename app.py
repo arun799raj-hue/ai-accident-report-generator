@@ -87,7 +87,7 @@ def create_pdf(text):
 
     c.save()
     return temp.name
-generate = st.button("Generate Report")
+
 # ---------------- REPORT GENERATION ----------------
 generate = st.button("Generate Report")
 
