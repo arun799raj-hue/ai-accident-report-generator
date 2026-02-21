@@ -116,7 +116,7 @@ Company Compensation:
 - Medical Expenses Covered
 - Job opportunity for one family member
 """
-else:
+elif:
     insurance_text = """
 Worker Responsibility:
 - Safety training required
