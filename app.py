@@ -132,7 +132,7 @@ Worker Responsibility:
 - Awareness program required
 """
 
-        elif cause == "Worker":
+        if cause == "Worker":
                  insurance_text = """
 Worker Responsibility:
 - Safety training to be provided to the worker
