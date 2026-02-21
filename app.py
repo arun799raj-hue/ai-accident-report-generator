@@ -88,41 +88,51 @@ def create_pdf(text):
     c.save()
     return temp.name
 generate = st.button("Generate Report")
-
 # ---------------- REPORT GENERATION ----------------
+generate = st.button("Generate Report")
+
 if generate:
+
     if not worker_name or not description:
         st.warning("Please fill all required fields.")
-insurance_text = ""
+    else:
 
-if cause == "Machine":
-    if severity == "Minor":
-        insurance_text = f"""
+        # ---------- INSURANCE LOGIC ----------
+        insurance_text = ""
+
+        if cause == "Machine":
+
+            if severity == "Minor":
+                insurance_text = f"""
 Company Compensation:
 - Payable Amount: {base_amount}
 - 1 Month Salary: {salary}
 - Medical Expenses Covered
 """
-    elif severity == "Major":
-        insurance_text = f"""
+
+            elif severity == "Major":
+                insurance_text = f"""
 Company Compensation:
 - Payable Amount: {base_amount}
 - Medical Expenses Covered
 """
-    elif severity == "Critical":
-        insurance_text = f"""
+
+            elif severity == "Critical":
+                insurance_text = f"""
 Company Compensation:
 - Huge Compensation: {base_amount}
 - Medical Expenses Covered
 - Job opportunity for one family member
 """
-elif:
-    insurance_text = """
+
+        else:
+            insurance_text = """
 Worker Responsibility:
 - Safety training required
 - Awareness program required
 """
-    else:
+
+        # ---------- AI PROMPT ----------
         prompt = f"""
 You are an industrial safety officer AI.
 
@@ -170,16 +180,15 @@ Use clear, formal, professional language.
                 data=report,
                 file_name="accident_report.txt"
             )
-            st.markdown(report)
+
             pdf_file = create_pdf(report)
 
-with open(pdf_file, "rb") as f:
-    st.download_button(
-        "Download PDF Report",
-        f,
-        file_name="Accident_Report.pdf"
-    )
+            with open(pdf_file, "rb") as f:
+                st.download_button(
+                    "Download PDF Report",
+                    f,
+                    file_name="Accident_Report.pdf"
+                )
 
-        
         except Exception as e:
             st.error(f"Error generating report: {e}")
