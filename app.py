@@ -1,6 +1,9 @@
 import streamlit as st
 import google.generativeai as genai
 from datetime import date, time
+import tempfile
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -65,9 +68,12 @@ uploaded_image = st.file_uploader(
 
 if uploaded_image:
     st.image(uploaded_image, caption="Accident Evidence", use_column_width=True)
+    temp_img = tempfile.NamedTemporaryFile(delete=False)
+    temp_img.write(uploaded_image.read())
+    temp_image_path = temp_img.name
 
 description = st.text_area("Describe what happened")
-def create_pdf(text):
+def create_pdf(text, image_path=None):
     temp = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
     c = canvas.Canvas(temp.name, pagesize=A4)
 
@@ -78,6 +84,16 @@ def create_pdf(text):
     c.drawString(50, 785, "Factory Accident Investigation Report")
 
     y = 760
+
+    # Add Image if exists
+    if image_path:
+        try:
+            c.drawImage(image_path, 50, 620, width=200, height=120)
+            y = 580
+        except:
+            pass
+
+    # Add Report Text
     for line in text.split("\n"):
         if y < 50:
             c.showPage()
@@ -188,7 +204,7 @@ Use clear, formal, professional language.
                 file_name="accident_report.txt"
             )
 
-            pdf_file = create_pdf(report)
+            pdf_file = create_pdf(report, temp_image_path)
 
             with open(pdf_file, "rb") as f:
                 st.download_button(
