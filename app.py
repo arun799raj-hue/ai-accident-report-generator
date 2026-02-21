@@ -125,12 +125,11 @@ Company Compensation:
 - Job opportunity for one family member
 """
 
-        elif cause == "Worker":
-    insurance_text = """
+        else:cause == "Worker":
+            insurance_text = """
 Worker Responsibility:
-- Safety training to be provided to the worker
-- Mandatory safety protocol re-training
-- Awareness and PPE compliance program
+- Safety training required
+- Awareness program required
 """
 
         # ---------- AI PROMPT ----------
