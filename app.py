@@ -36,21 +36,102 @@ severity = st.selectbox(
     "Injury Severity",
     ["Minor", "Major", "Critical"]
 )
+st.subheader("Advanced Investigation Details")
+
+# Role Based Access
+role = st.selectbox(
+    "User Role",
+    ["Safety Officer", "Supervisor", "Manager"]
+)
+
+# Accident Cause
+cause = st.selectbox(
+    "Accident Caused By",
+    ["Machine", "Worker"]
+)
+
+# Insurance Details
+salary = st.number_input("Worker Monthly Salary", min_value=0)
+base_amount = st.number_input(
+    "Insurance Payable Amount (Editable)",
+    min_value=0
+)
+
+# Image Upload
+uploaded_image = st.file_uploader(
+    "Upload Accident Image (Optional)",
+    type=["png","jpg","jpeg"]
+)
+
+if uploaded_image:
+    st.image(uploaded_image, caption="Accident Evidence", use_column_width=True)
 
 description = st.text_area("Describe what happened")
+def create_pdf(text):
+    temp = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
+    c = canvas.Canvas(temp.name, pagesize=A4)
 
+    # Company Header
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(50, 800, "ABC INDUSTRIES PVT LTD")
+    c.setFont("Helvetica", 10)
+    c.drawString(50, 785, "Factory Accident Investigation Report")
+
+    y = 760
+    for line in text.split("\n"):
+        if y < 50:
+            c.showPage()
+            y = 800
+        c.drawString(50, y, line)
+        y -= 14
+
+    c.save()
+    return temp.name
 generate = st.button("Generate Report")
 
 # ---------------- REPORT GENERATION ----------------
 if generate:
     if not worker_name or not description:
         st.warning("Please fill all required fields.")
+insurance_text = ""
+
+if cause == "Machine":
+    if severity == "Minor":
+        insurance_text = f"""
+Company Compensation:
+- Payable Amount: {base_amount}
+- 1 Month Salary: {salary}
+- Medical Expenses Covered
+"""
+    elif severity == "Major":
+        insurance_text = f"""
+Company Compensation:
+- Payable Amount: {base_amount}
+- Medical Expenses Covered
+"""
+    elif severity == "Critical":
+        insurance_text = f"""
+Company Compensation:
+- Huge Compensation: {base_amount}
+- Medical Expenses Covered
+- Job opportunity for one family member
+"""
+else:
+    insurance_text = """
+Worker Responsibility:
+- Safety training required
+- Awareness program required
+"""
     else:
         prompt = f"""
 You are an industrial safety officer AI.
 
 Generate a professional factory accident report using the details below.
 
+User Role: {role}
+Accident Caused By: {cause}
+Insurance Decision:
+{insurance_text}
 Worker Name: {worker_name}
 Employee ID: {worker_id}
 Date: {accident_date}
@@ -89,6 +170,16 @@ Use clear, formal, professional language.
                 data=report,
                 file_name="accident_report.txt"
             )
+            st.markdown(report)
+            pdf_file = create_pdf(report)
 
+with open(pdf_file, "rb") as f:
+    st.download_button(
+        "Download PDF Report",
+        f,
+        file_name="Accident_Report.pdf"
+    )
+
+        
         except Exception as e:
             st.error(f"Error generating report: {e}")
