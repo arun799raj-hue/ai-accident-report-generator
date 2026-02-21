@@ -124,13 +124,7 @@ Company Compensation:
 - Medical Expenses Covered
 - Job opportunity for one family member
 """
-             elif cause == "Worker":
-                 insurance_text = """
-Worker Responsibility:
-- Safety training to be provided to the worker
-- Mandatory safety protocol re-training
-- Awareness and PPE compliance program
-"""
+             
         else:
             insurance_text = """
 Worker Responsibility:
@@ -138,6 +132,13 @@ Worker Responsibility:
 - Awareness program required
 """
 
+        elif cause == "Worker":
+                 insurance_text = """
+Worker Responsibility:
+- Safety training to be provided to the worker
+- Mandatory safety protocol re-training
+- Awareness and PPE compliance program
+"""
         # ---------- AI PROMPT ----------
         prompt = f"""
 You are an industrial safety officer AI.
