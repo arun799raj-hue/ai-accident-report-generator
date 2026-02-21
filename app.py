@@ -124,8 +124,14 @@ Company Compensation:
 - Medical Expenses Covered
 - Job opportunity for one family member
 """
-
-        else:cause == "Worker":
+             elif cause == "Worker":
+    insurance_text = """
+Worker Responsibility:
+- Safety training to be provided to the worker
+- Mandatory safety protocol re-training
+- Awareness and PPE compliance program
+"""
+        else:
             insurance_text = """
 Worker Responsibility:
 - Safety training required
