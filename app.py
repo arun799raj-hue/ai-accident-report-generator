@@ -4,13 +4,30 @@ from datetime import date, time
 import tempfile
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+import pandas as pd
+import os
+import matplotlib.pyplot as plt
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
     page_title="AI Factory Accident Report Generator",
     layout="centered"
 )
-
+# -------- INDUSTRIAL DARK UI --------
+st.markdown("""
+<style>
+[data-testid="stAppViewContainer"] {
+    background-color:#0f172a;
+    color:white;
+}
+h1,h2,h3,h4 {color:#22c55e;}
+.stButton>button {
+    background:#22c55e;
+    color:black;
+    border-radius:8px;
+}
+</style>
+""", unsafe_allow_html=True)
 st.title("AI Factory Accident Report Generator")
 st.caption("Generate professional industrial accident reports using AI")
 
@@ -53,12 +70,14 @@ cause = st.selectbox(
     ["Machine", "Worker"]
 )
 
-# Insurance Details
-salary = st.number_input("Worker Monthly Salary", min_value=0)
-base_amount = st.number_input(
-    "Insurance Payable Amount (Editable)",
-    min_value=0
-)
+# Role Based Editable Compensation
+if role == "Safety Officer":
+    salary = st.number_input("Worker Monthly Salary", min_value=0)
+    base_amount = st.number_input("Insurance Payable Amount", min_value=0)
+else:
+    st.info("Only Safety Officer can edit compensation values.")
+    salary = 0
+    base_amount = 0
 
 # Image Upload
 uploaded_image = st.file_uploader(
@@ -155,6 +174,22 @@ Worker Responsibility:
 - Mandatory safety protocol re-training
 - Awareness and PPE compliance program
 """
+# -------- RISK SCORE ENGINE --------
+risk_score = 0
+
+if severity == "Minor":
+    risk_score += 20
+elif severity == "Major":
+    risk_score += 60
+elif severity == "Critical":
+    risk_score += 90
+
+if cause == "Machine":
+    risk_score += 10
+else:
+    risk_score += 30
+
+st.metric("⚠️ Predicted Risk Score", f"{risk_score}%")
         # ---------- AI PROMPT ----------
         prompt = f"""
 You are an industrial safety officer AI.
@@ -212,6 +247,70 @@ Use clear, formal, professional language.
                     f,
                     file_name="Accident_Report.pdf"
                 )
+                # -------- SAVE TO EXCEL DATABASE --------
 
+new_record = {
+    "Worker Name": worker_name,
+    "Employee ID": worker_id,
+    "Date": accident_date,
+    "Time": accident_time,
+    "Location": location,
+    "Machine": machine,
+    "Injury Type": injury_type,
+    "Severity": severity,
+    "Cause": cause,
+    "Risk Score": risk_score
+}
+
+file_path = "accident_database.xlsx"
+
+if os.path.exists(file_path):
+    df = pd.read_excel(file_path)
+else:
+    df = pd.DataFrame()
+
+updated_df = pd.concat([df, pd.DataFrame([new_record])], ignore_index=True)
+updated_df.to_excel(file_path, index=False)
+
+st.success("Record Saved to Industrial Database")
+# =====================================
+# INDUSTRIAL ANALYTICS DASHBOARD
+# =====================================
+
+st.markdown("---")
+st.subheader("📊 Industrial Safety Dashboard")
+
+total_accidents = len(updated_df)
+critical_cases = len(updated_df[updated_df["Severity"]=="Critical"])
+machine_faults = len(updated_df[updated_df["Cause"]=="Machine"])
+
+col1,col2,col3 = st.columns(3)
+col1.metric("Total Accidents", total_accidents)
+col2.metric("Critical Cases", critical_cases)
+col3.metric("Machine Faults", machine_faults)
+
+# -------- PIE 1 : SEVERITY --------
+st.markdown("### Severity Distribution")
+fig1, ax1 = plt.subplots()
+updated_df["Severity"].value_counts().plot.pie(autopct='%1.1f%%', ax=ax1)
+st.pyplot(fig1)
+
+# -------- PIE 2 : CAUSE --------
+st.markdown("### Cause Analysis")
+fig2, ax2 = plt.subplots()
+updated_df["Cause"].value_counts().plot.pie(autopct='%1.1f%%', ax=ax2)
+st.pyplot(fig2)
+
+# -------- TREND GRAPH (INDUSTRIAL LEVEL) --------
+st.markdown("### Accident Trend Over Time")
+
+trend_df = updated_df.copy()
+trend_df["Date"] = pd.to_datetime(trend_df["Date"])
+trend_count = trend_df.groupby("Date").size()
+
+fig3, ax3 = plt.subplots()
+trend_count.plot(ax=ax3)
+ax3.set_ylabel("Number of Accidents")
+st.pyplot(fig3)
         except Exception as e:
             st.error(f"Error generating report: {e}")
