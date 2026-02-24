@@ -262,55 +262,55 @@ try:
         "Risk Score": risk_score
     }
 
-file_path = "accident_database.xlsx"
+    file_path = "accident_database.xlsx"
 
-if os.path.exists(file_path):
-    df = pd.read_excel(file_path)
-else:
-    df = pd.DataFrame()
+    if os.path.exists(file_path):
+        df = pd.read_excel(file_path)
+    else:
+        df = pd.DataFrame()
 
-updated_df = pd.concat([df, pd.DataFrame([new_record])], ignore_index=True)
-updated_df.to_excel(file_path, index=False)
+    updated_df = pd.concat([df, pd.DataFrame([new_record])], ignore_index=True)
+    updated_df.to_excel(file_path, index=False)
 
-st.success("Record Saved to Industrial Database")
+    st.success("Record Saved to Industrial Database")
 # =====================================
 # INDUSTRIAL ANALYTICS DASHBOARD
 # =====================================
 
-st.markdown("---")
-st.subheader("📊 Industrial Safety Dashboard")
+    st.markdown("---")
+    st.subheader("📊 Industrial Safety Dashboard")
 
-total_accidents = len(updated_df)
-critical_cases = len(updated_df[updated_df["Severity"]=="Critical"])
-machine_faults = len(updated_df[updated_df["Cause"]=="Machine"])
+    total_accidents = len(updated_df)
+    critical_cases = len(updated_df[updated_df["Severity"]=="Critical"])
+    machine_faults = len(updated_df[updated_df["Cause"]=="Machine"])
 
-col1,col2,col3 = st.columns(3)
-col1.metric("Total Accidents", total_accidents)
-col2.metric("Critical Cases", critical_cases)
-col3.metric("Machine Faults", machine_faults)
+    col1,col2,col3 = st.columns(3)
+    col1.metric("Total Accidents", total_accidents)
+    col2.metric("Critical Cases", critical_cases)
+    col3.metric("Machine Faults", machine_faults)
 
 # -------- PIE 1 : SEVERITY --------
-st.markdown("### Severity Distribution")
-fig1, ax1 = plt.subplots()
-updated_df["Severity"].value_counts().plot.pie(autopct='%1.1f%%', ax=ax1)
-st.pyplot(fig1)
+    st.markdown("### Severity Distribution")
+    fig1, ax1 = plt.subplots()
+    updated_df["Severity"].value_counts().plot.pie(autopct='%1.1f%%', ax=ax1)
+    st.pyplot(fig1)
 
 # -------- PIE 2 : CAUSE --------
-st.markdown("### Cause Analysis")
-fig2, ax2 = plt.subplots()
-updated_df["Cause"].value_counts().plot.pie(autopct='%1.1f%%', ax=ax2)
-st.pyplot(fig2)
+    st.markdown("### Cause Analysis")
+    fig2, ax2 = plt.subplots()
+    updated_df["Cause"].value_counts().plot.pie(autopct='%1.1f%%', ax=ax2)
+    st.pyplot(fig2)
 
 # -------- TREND GRAPH (INDUSTRIAL LEVEL) --------
-st.markdown("### Accident Trend Over Time")
+    st.markdown("### Accident Trend Over Time")
 
-trend_df = updated_df.copy()
-trend_df["Date"] = pd.to_datetime(trend_df["Date"])
-trend_count = trend_df.groupby("Date").size()
+    trend_df = updated_df.copy()
+    trend_df["Date"] = pd.to_datetime(trend_df["Date"])
+    trend_count = trend_df.groupby("Date").size()
 
-fig3, ax3 = plt.subplots()
-trend_count.plot(ax=ax3)
-ax3.set_ylabel("Number of Accidents")
-st.pyplot(fig3)
-        except Exception as e:
-            st.error(f"Error generating report: {e}")
+    fig3, ax3 = plt.subplots()
+    trend_count.plot(ax=ax3)
+    ax3.set_ylabel("Number of Accidents")
+    st.pyplot(fig3)
+            except Exception as e:
+                st.error(f"Error generating report: {e}")
