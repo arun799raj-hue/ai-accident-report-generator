@@ -1,5 +1,8 @@
 streamlit
 google-generativeai==0.3.2
 reportlab
+pandas
+openpyxl
+matplotlib
 
 
