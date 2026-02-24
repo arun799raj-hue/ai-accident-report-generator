@@ -312,5 +312,5 @@ try:
     trend_count.plot(ax=ax3)
     ax3.set_ylabel("Number of Accidents")
     st.pyplot(fig3)
-            except Exception as e:
-                st.error(f"Error generating report: {e}")
+        except Exception as e:
+            st.error(f"Error generating report: {e}")
