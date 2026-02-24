@@ -248,8 +248,7 @@ Use clear, formal, professional language.
                     file_name="Accident_Report.pdf"
                 )
                 # -------- SAVE TO EXCEL DATABASE --------
-
-new_record = {
+            new_record = {
     "Worker Name": worker_name,
     "Employee ID": worker_id,
     "Date": accident_date,
