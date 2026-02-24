@@ -248,18 +248,19 @@ try:
             file_name="Accident_Report.pdf"
         )
                 # -------- SAVE TO EXCEL DATABASE --------
-            new_record = {
-    "Worker Name": worker_name,
-    "Employee ID": worker_id,
-    "Date": accident_date,
-    "Time": accident_time,
-    "Location": location,
-    "Machine": machine,
-    "Injury Type": injury_type,
-    "Severity": severity,
-    "Cause": cause,
-    "Risk Score": risk_score
-}
+    new_record = {
+        
+        "Worker Name": worker_name,
+        "Employee ID": worker_id,
+        "Date": accident_date,
+        "Time": accident_time,
+        "Location": location,
+        "Machine": machine,
+        "Injury Type": injury_type,
+        "Severity": severity,
+        "Cause": cause,
+        "Risk Score": risk_score
+    }
 
 file_path = "accident_database.xlsx"
 
