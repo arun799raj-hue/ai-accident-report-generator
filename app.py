@@ -191,7 +191,7 @@ else:
 
 st.metric("⚠️ Predicted Risk Score", f"{risk_score}%")
         # ---------- AI PROMPT ----------
-        prompt = f"""
+prompt = f"""
 You are an industrial safety officer AI.
 
 Generate a professional factory accident report using the details below.
