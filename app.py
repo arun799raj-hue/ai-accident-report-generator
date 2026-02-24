@@ -169,7 +169,7 @@ Worker Responsibility:
 
         if cause == "Worker":
                  insurance_text = """
-Worker Responsibility:
+Worker Responsibility: 
 - Safety training to be provided to the worker
 - Mandatory safety protocol re-training
 - Awareness and PPE compliance program
@@ -225,28 +225,28 @@ The report must include:
 Use clear, formal, professional language.
 """
 
-        try:
-            response = model.generate_content(prompt)
-            report = response.text
+try:
+    response = model.generate_content(prompt)
+    report = response.text
 
-            st.success("Accident Report Generated")
-            st.markdown("---")
-            st.markdown(report)
+    st.success("Accident Report Generated")
+    st.markdown("---")
+    st.markdown(report)
 
-            st.download_button(
-                label="Download Report",
-                data=report,
-                file_name="accident_report.txt"
-            )
+    st.download_button(
+        label="Download Report",
+        data=report,
+        file_name="accident_report.txt"
+    )
 
-            pdf_file = create_pdf(report, temp_image_path)
+    pdf_file = create_pdf(report, temp_image_path)
 
-            with open(pdf_file, "rb") as f:
-                st.download_button(
-                    "Download PDF Report",
-                    f,
-                    file_name="Accident_Report.pdf"
-                )
+    with open(pdf_file, "rb") as f:
+        st.download_button(
+            "Download PDF Report",
+            f,
+            file_name="Accident_Report.pdf"
+        )
                 # -------- SAVE TO EXCEL DATABASE --------
             new_record = {
     "Worker Name": worker_name,
