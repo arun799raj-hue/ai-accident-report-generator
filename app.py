@@ -198,8 +198,7 @@ Generate a professional factory accident report using the details below.
 
 User Role: {role}
 Accident Caused By: {cause}
-Insurance Decision:
-{insurance_text}
+Insurance Decision:{insurance_text}
 Worker Name: {worker_name}
 Employee ID: {worker_id}
 Date: {accident_date}
