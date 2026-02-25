@@ -247,3 +247,30 @@ Generate a structured professional industrial accident report.
 
         except Exception as e:
             st.error(f"Error generating report: {e}")
+
+# =====================================
+# 📂 VIEW INDUSTRIAL ACCIDENT DATABASE
+# =====================================
+
+st.markdown("---")
+st.subheader("📂 Previous Accident Records (Industrial Database)")
+
+file_path = "accident_database.xlsx"
+
+if os.path.exists(file_path):
+
+    db_df = pd.read_excel(file_path)
+
+    # Show Table
+    st.dataframe(db_df, use_container_width=True)
+
+    # Download Full Database
+    with open(file_path, "rb") as f:
+        st.download_button(
+            "⬇ Download Full Accident Database (Excel)",
+            f,
+            file_name="accident_database.xlsx"
+        )
+
+else:
+    st.info("No accident records saved yet.")
